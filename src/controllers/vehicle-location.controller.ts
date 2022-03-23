@@ -105,7 +105,7 @@ export class VehicleLocationController {
     },
   })
   async findById(
-    @param.path.number('id') id: number,
+    @param.path.number('id') id: string,
     @param.filter(Vehiclelocation, {exclude: 'where'}) filter?: FilterExcludingWhere<Vehiclelocation>
   ): Promise<Vehiclelocation> {
     return this.vehiclelocationRepository.findById(id, filter);
@@ -116,7 +116,7 @@ export class VehicleLocationController {
     description: 'Vehiclelocation PATCH success',
   })
   async updateById(
-    @param.path.number('id') id: number,
+    @param.path.number('id') id: string,
     @requestBody({
       content: {
         'application/json': {
@@ -134,7 +134,7 @@ export class VehicleLocationController {
     description: 'Vehiclelocation PUT success',
   })
   async replaceById(
-    @param.path.number('id') id: number,
+    @param.path.number('id') id: string,
     @requestBody() vehiclelocation: Vehiclelocation,
   ): Promise<void> {
     await this.vehiclelocationRepository.replaceById(id, vehiclelocation);
@@ -144,7 +144,32 @@ export class VehicleLocationController {
   @response(204, {
     description: 'Vehiclelocation DELETE success',
   })
-  async deleteById(@param.path.number('id') id: number): Promise<void> {
+  async deleteById(@param.path.number('id') id: string): Promise<void> {
     await this.vehiclelocationRepository.deleteById(id);
   }
+
+  @get('/vehicletrackingdetails')
+  async vehicletrackingdetails(
+    @param.query.number('tripid') tripid: number,
+    @param.query.number('timestamp') timestamp: number) {
+    console.log('trip id  ', tripid);
+    console.log('time stamp  ', timestamp);
+    let res;
+    if (timestamp) {
+      res = await this.vehiclelocationRepository.find({
+        where: {tripId: tripid, timestamp: {gt: timestamp}}
+      });
+    }
+    else {
+      res = await this.vehiclelocationRepository.find({
+        where: {tripId: tripid}
+      });
+    }
+
+    return res;
+  }
+
 }
+
+
+

@@ -3,11 +3,11 @@ import {Entity, model, property} from '@loopback/repository';
 @model({settings: {strict: false}})
 export class Vehiclelocation extends Entity {
   @property({
-    type: 'number',
+    type: 'string',
     id: true,
     generated: true,
   })
-  id?: number;
+  id?: string;
 
   @property({
     type: 'number',
@@ -42,6 +42,12 @@ export class Vehiclelocation extends Entity {
     required: true,
   })
   timestamp: number;
+
+  @property({
+    type: 'number',
+    required: true,
+  })
+  tripId: number;
 
   // Define well-known properties here
 
