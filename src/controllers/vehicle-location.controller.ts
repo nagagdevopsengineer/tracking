@@ -152,17 +152,22 @@ export class VehicleLocationController {
   async vehicletrackingdetails(
     @param.query.number('tripid') tripid: number,
     @param.query.number('timestamp') timestamp: number) {
-    console.log('trip id  ', tripid);
-    console.log('time stamp  ', timestamp);
     let res;
     if (timestamp) {
       res = await this.vehiclelocationRepository.find({
-        where: {tripId: tripid, timestamp: {gt: timestamp}}
+        where: {tripId: tripid, timestamp: {gt: timestamp}},
+        order: ['timestamp ASC'],
       });
     }
     else {
       res = await this.vehiclelocationRepository.find({
-        where: {tripId: tripid}
+        where: {tripId: tripid},
+        order: ['timestamp ASC'],
+      });
+    }
+
+    return res;
+  }
       });
     }
 
