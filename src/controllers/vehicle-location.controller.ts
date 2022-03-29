@@ -4,18 +4,18 @@ import {
   Filter,
   FilterExcludingWhere,
   repository,
-  Where,
+  Where
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
-  response,
+  response
 } from '@loopback/rest';
 import {Vehiclelocation} from '../models';
 import {VehiclelocationRepository} from '../repositories';
@@ -23,8 +23,8 @@ import {VehiclelocationRepository} from '../repositories';
 export class VehicleLocationController {
   constructor(
     @repository(VehiclelocationRepository)
-    public vehiclelocationRepository : VehiclelocationRepository,
-  ) {}
+    public vehiclelocationRepository: VehiclelocationRepository,
+  ) { }
 
   @post('/vehiclelocations')
   @response(200, {
@@ -168,11 +168,7 @@ export class VehicleLocationController {
 
     return res;
   }
-      });
-    }
 
-    return res;
-  }
 
 }
 
