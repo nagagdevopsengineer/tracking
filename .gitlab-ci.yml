@@ -1,72 +1,22 @@
 image: docker:19.03.12
 
 variables:
-<<<<<<< HEAD
-  BUILD_IMAGE: "vapprtech/arrivnow-reactjs:${CI_COMMIT_SHORT_SHA}"
-  DOCKER_TLS_CERTDIR: "/certs"
-
-services:
-  - docker:19.03.12-dind
-
-stages:          # List of stages for jobs, and their order of execution
-  - build_image
-  - deploy_arrivnow
-
-docker-build-image:
-  stage: build_image
-  script:
-    - docker info
-    - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
-    - docker build -t ${BUILD_IMAGE} -f Dockerfile .
-    - docker tag ${BUILD_IMAGE} vapprtech/arrivnow-reactjs:latest
-    - docker push ${BUILD_IMAGE}
-    - docker push vapprtech/arrivnow-reactjs:latest
-  rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_COMMIT_BRANCH == "develop"'
-      changes:
-        - Dockerfile
-      when: always
-
-deploy-arrivnow:
-  stage: deploy_arrivnow
-  #needs: ["docker-build-image"]
-  image: vapprtech/awskubectl:latest
-  before_script:
-    - aws eks update-kubeconfig --name arrivnow --region us-east-2
-    - kubectl create namespace tracking  --dry-run=client -o yaml | kubectl apply -f -
-  script:
-    - >
-      if [[ $(kubectl get deployment tracking -n tracking 2>&1) != "No resources found*" ]]; then
-        echo "Updating deployment with new image"
-        kubectl set image deployment/tracking -n tracking tracking=vapprtech/arrivnow-reactjs:latest
-        sleep 180
-        kubectl get all -n tracking -o wide
-      else
-        echo "Deploying tracking application"
-        kubectl apply -f manifest
-        sleep 60
-        kubectl get pods -n tracking --field-selector=status.phase=Running -o wide
-        kubectl get svc -n tracking -o wide
-      fi
-  rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_COMMIT_BRANCH == "develop"'
-=======
-  BUILD_IMAGE: "vapprtech/arrivnow-tracking:v2"
-  DEPLOY_ENV: "PROD" #Name space in kubernetes
+  BUILD_IMAGE: "vapprtech/arrivnow-tracking:${CI_COMMIT_SHORT_SHA}"
+  #BUILD_IMAGE: "vapprtech/arrivnow-tracking:v2"
 #   DOCKER_TLS_CERTDIR: "/certs"
 
 services:
   - docker:19.03.12-dind
-          
+
 stages:          # List of stages for jobs, and their order of execution
   - build_tracking_image
   - deploy_tracking
 
-docker-build-image:
+docker-tracking-image:
   stage: build_tracking_image
   script:
     - docker info
-    - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD # Get 
+    - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD # Get
     - docker build -t ${BUILD_IMAGE} -f Dockerfile .
     #- docker tag ${BUILD_IMAGE} vapprtech/arrivnow-reactjs:latest
     - docker push ${BUILD_IMAGE}
@@ -75,22 +25,20 @@ docker-build-image:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_COMMIT_BRANCH == "main"'
       changes:
         - Dockerfile
-        - codebase/*
-        - arrivnow/manifest/*
       when: always
 
-deploy-arrivnow:
+deploy-tracking:
   stage: deploy_tracking
   #needs: ["docker-build-image"]
   image: vapprtech/awskubectl:latest
   before_script:
-    - aws eks update-kubeconfig --name arrivnow --region us-east-2 
-    - kubectl create namespace arrivnow  --dry-run=client -o yaml | kubectl apply -f -   
+    - aws eks update-kubeconfig --name arrivnow --region us-east-2
+    - kubectl create namespace arrivnow  --dry-run=client -o yaml | kubectl apply -f -
   script:
     - >
       if [ $(kubectl get deployment arrivnow -n arrivnow) != "No resources found in arrivnow namespace." ]; then
         echo "Updating deployment with new image"
-        kubectl set image deployment/arrivnow -n arrivnow arrivnow=vapprtech/arrivnow-reactjs:v2
+        kubectl set image deployment/arrivnow -n arrivnow arrivnow=vapprtech/arrivnow-tracking:v2
         sleep 180
         kubectl get all -n arrivnow
       else
@@ -101,6 +49,5 @@ deploy-arrivnow:
         kubectl get svc -n arrivnow
       fi
   rules:
-    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_COMMIT_BRANCH == "master"'
->>>>>>> 4a5b2379f72236bf01431f015fbfbdb9f815c39e
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_COMMIT_BRANCH == "main"'
       when: always
