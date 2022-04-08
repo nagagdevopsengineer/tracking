@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: tracking
-        image: vapprtech/arrivnow-tracking:latest
+        image: vapprtech/arrivnow-reactjs:latest
         imagePullPolicy: Always
         ports:
         - name: https

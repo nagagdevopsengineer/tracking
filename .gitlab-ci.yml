@@ -1,7 +1,7 @@
 image: docker:19.03.12
 
 variables:
-  BUILD_IMAGE: "vapprtech/arrivnow-tracking:${CI_COMMIT_SHORT_SHA}"
+  BUILD_IMAGE: "vapprtech/arrivnow-reactjs:${CI_COMMIT_SHORT_SHA}"
   #BUILD_IMAGE: "vapprtech/arrivnow-tracking:v2"
 #   DOCKER_TLS_CERTDIR: "/certs"
 
@@ -38,7 +38,7 @@ deploy-tracking:
     - >
       if [[ $(kubectl get deployment tracking -n tracking 2>&1) != "No resources found in tracking namespace" ]]; then
         echo "Updating deployment with new image"
-        kubectl set image deployment/tracking -n tracking tracking=vapprtech/arrivnow-tracking:latest
+        kubectl set image deployment/tracking -n tracking tracking=vapprtech/arrivnow-reactjs:latest
         sleep 180
         kubectl get all -n tracking  -o wide
       else
