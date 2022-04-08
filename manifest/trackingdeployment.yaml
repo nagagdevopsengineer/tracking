@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tracking
+  namespace: arrivnow
+  labels:
+    app: tracking
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tracking
+  template:
+    metadata:
+      labels:
+        app: tracking
+    spec:
+      containers:
+      - name: tracking
+        image: vapprtech/arrivnow-reactjs:latest
+        imagePullPolicy: Always
+        ports:
+        - name: https
+          containerPort: 3000
