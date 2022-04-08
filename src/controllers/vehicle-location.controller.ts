@@ -4,18 +4,18 @@ import {
   Filter,
   FilterExcludingWhere,
   repository,
-  Where,
+  Where
 } from '@loopback/repository';
 import {
-  post,
-  param,
+  del,
   get,
   getModelSchemaRef,
+  param,
   patch,
+  post,
   put,
-  del,
   requestBody,
-  response,
+  response
 } from '@loopback/rest';
 import {Vehiclelocation} from '../models';
 import {VehiclelocationRepository} from '../repositories';
@@ -23,8 +23,8 @@ import {VehiclelocationRepository} from '../repositories';
 export class VehicleLocationController {
   constructor(
     @repository(VehiclelocationRepository)
-    public vehiclelocationRepository : VehiclelocationRepository,
-  ) {}
+    public vehiclelocationRepository: VehiclelocationRepository,
+  ) { }
 
   @post('/vehiclelocations')
   @response(200, {
@@ -152,22 +152,23 @@ export class VehicleLocationController {
   async vehicletrackingdetails(
     @param.query.number('tripid') tripid: number,
     @param.query.number('timestamp') timestamp: number) {
-    console.log('trip id  ', tripid);
-    console.log('time stamp  ', timestamp);
     let res;
     if (timestamp) {
       res = await this.vehiclelocationRepository.find({
-        where: {tripId: tripid, timestamp: {gt: timestamp}}
+        where: {tripId: tripid, timestamp: {gt: timestamp}},
+        order: ['timestamp ASC'],
       });
     }
     else {
       res = await this.vehiclelocationRepository.find({
-        where: {tripId: tripid}
+        where: {tripId: tripid},
+        order: ['timestamp ASC'],
       });
     }
 
     return res;
   }
+
 
 }
 

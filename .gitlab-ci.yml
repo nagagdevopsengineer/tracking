@@ -1,6 +1,7 @@
 image: docker:19.03.12
 
 variables:
+<<<<<<< HEAD
   BUILD_IMAGE: "vapprtech/arrivnow-reactjs:${CI_COMMIT_SHORT_SHA}"
   DOCKER_TLS_CERTDIR: "/certs"
 
@@ -49,4 +50,57 @@ deploy-arrivnow:
       fi
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_COMMIT_BRANCH == "develop"'
+=======
+  BUILD_IMAGE: "vapprtech/arrivnow-tracking:v2"
+  DEPLOY_ENV: "PROD" #Name space in kubernetes
+#   DOCKER_TLS_CERTDIR: "/certs"
+
+services:
+  - docker:19.03.12-dind
+          
+stages:          # List of stages for jobs, and their order of execution
+  - build_tracking_image
+  - deploy_tracking
+
+docker-build-image:
+  stage: build_tracking_image
+  script:
+    - docker info
+    - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD # Get 
+    - docker build -t ${BUILD_IMAGE} -f Dockerfile .
+    #- docker tag ${BUILD_IMAGE} vapprtech/arrivnow-reactjs:latest
+    - docker push ${BUILD_IMAGE}
+    #- docker push vapprtech/arrivnow-reactjs:latest
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_COMMIT_BRANCH == "main"'
+      changes:
+        - Dockerfile
+        - codebase/*
+        - arrivnow/manifest/*
+      when: always
+
+deploy-arrivnow:
+  stage: deploy_tracking
+  #needs: ["docker-build-image"]
+  image: vapprtech/awskubectl:latest
+  before_script:
+    - aws eks update-kubeconfig --name arrivnow --region us-east-2 
+    - kubectl create namespace arrivnow  --dry-run=client -o yaml | kubectl apply -f -   
+  script:
+    - >
+      if [ $(kubectl get deployment arrivnow -n arrivnow) != "No resources found in arrivnow namespace." ]; then
+        echo "Updating deployment with new image"
+        kubectl set image deployment/arrivnow -n arrivnow arrivnow=vapprtech/arrivnow-reactjs:v2
+        sleep 180
+        kubectl get all -n arrivnow
+      else
+        echo "Deploying arrivnow application"
+        kubectl apply -f arrivnow/manifest
+        sleep 60
+        kubectl get pods -n arrivnow --field-selector=status.phase=Running
+        kubectl get svc -n arrivnow
+      fi
+  rules:
+    - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_COMMIT_BRANCH == "master"'
+>>>>>>> 4a5b2379f72236bf01431f015fbfbdb9f815c39e
       when: always
