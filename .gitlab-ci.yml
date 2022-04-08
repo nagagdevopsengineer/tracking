@@ -43,7 +43,7 @@ deploy-tracking:
         kubectl get all -n tracking
       else
         echo "Deploying tracking application"
-        kubectl apply -f manifest
+        kubectl apply -f manifest/trackingdeployment.yaml
         sleep 60
         kubectl get pods -n tracking --field-selector=status.phase=Running
         kubectl get svc -n tracking
