@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: tracking
-  namespace: arrivnow
+  namespace: tracking
   labels:
     app: tracking
 spec:
