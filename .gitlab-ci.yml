@@ -36,17 +36,17 @@ deploy-tracking:
     - kubectl create namespace tracking --dry-run=client -o yaml | kubectl apply -f -
   script:
     - >
-      if [ $(kubectl get deployment tracking -n tracking) != "No resources found in tracking namespace." ]; then
+      if [ $(kubectl get deployment tracking -n tracking 2>&1) != "No resources found in tracking namespace." ]; then
         echo "Updating deployment with new image"
         kubectl set image deployment/tracking -n tracking tracking=vapprtech/arrivnow-tracking:latest
         sleep 180
-        kubectl get all -n tracking
+        kubectl get all -n tracking  -o wide
       else
         echo "Deploying tracking application"
-        kubectl apply -f manifest/trackingdeployment.yaml
+        kubectl apply -f manifest
         sleep 60
         kubectl get pods -n tracking --field-selector=status.phase=Running
-        kubectl get svc -n tracking
+        kubectl get svc -n tracking -o wide
       fi
   rules:
     - if: '$CI_PIPELINE_SOURCE == "merge_request_event" || $CI_COMMIT_BRANCH == "main"'
