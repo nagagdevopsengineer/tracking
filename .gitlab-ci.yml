@@ -43,7 +43,7 @@ deploy-tracking:
         kubectl get all -n arrivnow
       else
         echo "Deploying arrivnow application"
-        kubectl apply -f arrivnow/manifest
+        kubectl apply -f manifest
         sleep 60
         kubectl get pods -n arrivnow --field-selector=status.phase=Running
         kubectl get svc -n arrivnow
