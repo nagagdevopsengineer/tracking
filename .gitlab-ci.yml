@@ -38,7 +38,7 @@ deploy-tracking:
     - >
       if [ $(kubectl get deployment tracking -n tracking) != "No resources found in tracking namespace." ]; then
         echo "Updating deployment with new image"
-        kubectl set image deployment/tracking -n tracking tracking=vapprtech/arrivnow-tracking:v2
+        kubectl set image deployment/tracking -n tracking tracking=vapprtech/arrivnow-tracking:latest
         sleep 180
         kubectl get all -n tracking
       else
