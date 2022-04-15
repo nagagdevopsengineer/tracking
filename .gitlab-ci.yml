@@ -24,7 +24,6 @@ docker-build-image:
   only:
     - main
 
-
 deploy-arrivnow:
   stage: deploy_arrivnow
   #needs: ["docker-build-image"]
