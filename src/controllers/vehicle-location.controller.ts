@@ -150,18 +150,18 @@ export class VehicleLocationController {
 
   @get('/vehicletrackingdetails')
   async vehicletrackingdetails(
-    @param.query.number('tripid') tripid: number,
+    @param.query.number('vehicleid') vehicleid: number,
     @param.query.number('timestamp') timestamp: number) {
     let res;
     if (timestamp) {
       res = await this.vehiclelocationRepository.find({
-        where: {tripId: tripid, timestamp: {gt: timestamp}},
+        where: {vehicleid: vehicleid, timestamp: {gt: timestamp}},
         order: ['timestamp ASC'],
       });
     }
     else {
       res = await this.vehiclelocationRepository.find({
-        where: {tripId: tripid},
+        where: {vehicleid: vehicleid},
         order: ['timestamp ASC'],
       });
     }
