@@ -24,6 +24,7 @@ docker-build-image:
   only:
     - main
 
+
 deploy-arrivnow:
   stage: deploy_arrivnow
   #needs: ["docker-build-image"]
@@ -32,7 +33,7 @@ deploy-arrivnow:
     - aws eks update-kubeconfig --name arrivnow --region us-east-2
     - kubectl create namespace tracking  --dry-run=client -o yaml | kubectl apply -f -
   script:
-      - sed -i "s/<VERSION>/${CI_COMMIT_SHORT_SHA}/g" manifest/trackingdeployment.yaml
+      - sed -i "s/latest/${CI_COMMIT_SHORT_SHA}/g" manifest/trackingdeployment.yaml
       - kubectl apply -f manifest
       - kubectl get pods -n tracking
       - kubectl get svc -n tracking -o wide
