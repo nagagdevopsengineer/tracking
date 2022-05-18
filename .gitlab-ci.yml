@@ -31,7 +31,7 @@ deploy-arrivnow-dev:
   #needs: ["docker-build-image"]
   image: vapprtech/awskubectl:latest
   before_script:
-    - aws eks update-kubeconfig --name arrivnow --region us-east-2
+    - aws eks update-kubeconfig --name arrivnow-dev --region us-east-2
     - kubectl create namespace tracking  --dry-run=client -o yaml | kubectl apply -f -
   script:
      # - sed -i "s/latest/${CI_COMMIT_SHORT_SHA}/g" manifest/trackingdeployment.yaml
@@ -47,7 +47,7 @@ deploy-arrivnow-qa:
   #needs: ["docker-build-image"]
   image: vapprtech/awskubectl:latest
   before_script:
-    - aws eks update-kubeconfig --name arrivnow --region us-east-2
+    - aws eks update-kubeconfig --name arrivnow-qa --region us-east-2
     - kubectl create namespace tracking  --dry-run=client -o yaml | kubectl apply -f -
   script:
      # - sed -i "s/latest/${CI_COMMIT_SHORT_SHA}/g" manifest/trackingdeployment.yaml
