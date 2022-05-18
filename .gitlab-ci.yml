@@ -10,7 +10,7 @@ services:
 stages:          # List of stages for jobs, and their order of execution
   - build_image
   - deploy_arrivnow-dev
-  - deploy-arrivnow-qa
+  - deploy_arrivnow-qa
 
 docker-build-image:
   stage: build_image
