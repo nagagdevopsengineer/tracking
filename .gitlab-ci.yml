@@ -56,4 +56,4 @@ deploy-arrivnow-qa:
       - kubectl get svc -n tracking -o wide
   when: always
   only:
-    - staging   
+    - staging
