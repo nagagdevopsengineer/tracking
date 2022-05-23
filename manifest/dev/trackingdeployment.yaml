@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: tracking
-  namespace: tracking
+  name: tracking-dev
+  namespace: tracking-dev
   labels:
-    app: tracking
+    app: tracking-dev
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: tracking
+      app: tracking-dev
   template:
     metadata:
       labels:
-        app: tracking
+        app: tracking-dev
     spec:
       containers:
-      - name: tracking
+      - name: tracking-dev
         image: vapprtech/tracking:latest
         imagePullPolicy: Always
         ports:
