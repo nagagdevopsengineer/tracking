@@ -15,5 +15,5 @@ spec:
         paths:
           - path: /*
             backend:
-              serviceName: crm-content
+              serviceName: tracking
               servicePort: 80
