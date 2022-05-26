@@ -14,7 +14,8 @@ spec:
    - host: dev-tracking.vapprtech.com
    - http:
         paths:
-          - path: /*
+          - path: /
+            pathType: Prefix
             backend:
               service:
                name: tracking
