@@ -55,6 +55,7 @@
     "@loopback/rest-explorer": "^4.1.0",
     "@loopback/service-proxy": "^4.1.0",
     "loopback-connector-mongodb": "^6.1.0",
+    "loopback-connector-rest": "^4.0.1",
     "pm2": "^5.2.0",
     "tslib": "^2.0.0",
     "yarn": "^1.22.18"

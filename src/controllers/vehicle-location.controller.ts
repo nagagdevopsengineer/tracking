@@ -47,6 +47,9 @@ export class VehicleLocationController {
     return this.vehiclelocationRepository.create(vehiclelocation);
   }
 
+ 
+
+
   @get('/vehiclelocations/count')
   @response(200, {
     description: 'Vehiclelocation model count',

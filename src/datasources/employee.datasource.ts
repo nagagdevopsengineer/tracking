@@ -9,7 +9,7 @@ const config = {
   port: 27017,
   user: 'trackingapp',
   password: 'arrivnow123',
-  database: 'employeelocation',
+  database: 'tracking',
   useNewUrlParser: true
 };
 
