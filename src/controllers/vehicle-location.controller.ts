@@ -1,3 +1,4 @@
+import {inject} from '@loopback/context';
 import {
   Count,
   CountSchema,
@@ -19,11 +20,14 @@ import {
 } from '@loopback/rest';
 import {Vehiclelocation} from '../models';
 import {VehiclelocationRepository} from '../repositories';
+import {CrmService} from '../services/crmrestdatasource.service';
 
 export class VehicleLocationController {
   constructor(
     @repository(VehiclelocationRepository)
     public vehiclelocationRepository: VehiclelocationRepository,
+    @inject('services.CrmService')
+    protected crmService: CrmService,
   ) { }
 
   @post('/vehiclelocations')
@@ -44,10 +48,13 @@ export class VehicleLocationController {
     })
     vehiclelocation: Omit<Vehiclelocation, 'id'>,
   ): Promise<Vehiclelocation> {
+
+    this.crmService.busTracking(vehiclelocation.tripId,
+      vehiclelocation.lat, vehiclelocation.long);
     return this.vehiclelocationRepository.create(vehiclelocation);
   }
 
- 
+
 
 
   @get('/vehiclelocations/count')
