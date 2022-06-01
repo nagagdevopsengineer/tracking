@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tracking-qa
+  namespace: tracking-qa
+  labels:
+    app: tracking-qa
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: tracking-qa
+  template:
+    metadata:
+      labels:
+        app: tracking-qa
+    spec:
+      containers:
+      - name: tracking-qa
+        image: vapprtech/tracking:latest
+        imagePullPolicy: Always
+        ports:
+        - name: https
+          containerPort: 3000

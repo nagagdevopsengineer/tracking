@@ -1,0 +1,23 @@
+apiVersion: networking.k8s.io/v1
+#apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  namespace: tracking-qa
+  name: ingress-qa
+  annotations:
+    kubernetes.io/ingress.class: alb
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: instance
+
+spec:
+  rules:
+   - host: qa-tracking.vapprtech.com
+   - http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+               name: tracking-qa
+               port:
+                number: 80
