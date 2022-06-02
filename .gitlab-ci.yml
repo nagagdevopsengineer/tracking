@@ -1,7 +1,7 @@
 image: docker:19.03.12
 
 variables:
-  CONTAINER_IMAGE: "vapprtech/tracking:latest"
+  CONTAINER_IMAGE: "vapprtech/tracking-location:latest"
   DOCKER_TLS_CERTDIR: "/certs"
 
 services:
@@ -19,11 +19,11 @@ docker-build-image:
     - docker login -u ${CI_REGISTRY_USER} -p ${CI_REGISTRY_PASSWORD}
     - docker build -t ${CONTAINER_IMAGE} .
     - docker tag ${CONTAINER_IMAGE} ${CONTAINER_IMAGE}
-    - docker tag ${CONTAINER_IMAGE} vapprtech/tracking:latest
+    - docker tag ${CONTAINER_IMAGE} vapprtech/tracking-location:latest
     - docker push ${CONTAINER_IMAGE}
   when: always
   only:
-    - develop
+    - location
 
 
 deploy-arrivnow-dev:
@@ -32,16 +32,16 @@ deploy-arrivnow-dev:
   image: vapprtech/awskubectl:latest
   before_script:
     - aws eks update-kubeconfig --name arrivnow-dev --region us-east-2
-    - kubectl create namespace tracking-dev  --dry-run=client -o yaml | kubectl apply -f -
+    - kubectl create namespace tracking-location  --dry-run=client -o yaml | kubectl apply -f -
   script:
      # - sed -i "s/latest/${CI_COMMIT_SHORT_SHA}/g" manifest/trackingdeployment.yaml
       - kubectl apply -f manifest/dev
-      - kubectl rollout restart deployment tracking-dev -n tracking-dev
-      - kubectl get pods -n tracking-dev
-      - kubectl get svc -n tracking-dev -o wide
+      - kubectl rollout restart deployment tracking-dev -n tracking-location
+      - kubectl get pods -n tracking-location
+      - kubectl get svc -n tracking-location -o wide
   when: always
   only:
-    - develop
+    - location
 
 deploy-arrivnow-qa:
   stage: deploy_arrivnow-qa

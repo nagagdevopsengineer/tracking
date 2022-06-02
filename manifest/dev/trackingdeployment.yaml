@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: tracking-dev
-  namespace: tracking-dev
+  namespace: tracking-location
   labels:
     app: tracking-dev
 spec:
@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: tracking-dev
-        image: vapprtech/tracking:latest
+        image: vapprtech/tracking-location:latest
         imagePullPolicy: Always
         ports:
         - name: https
