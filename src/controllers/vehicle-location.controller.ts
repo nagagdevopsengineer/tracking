@@ -50,7 +50,7 @@ export class VehicleLocationController {
   ): Promise<Vehiclelocation> {
 
     this.crmService.busTracking(vehiclelocation.tripId,
-      vehiclelocation.lat, vehiclelocation.long);
+      vehiclelocation.latitude, vehiclelocation.longitude);
     return this.vehiclelocationRepository.create(vehiclelocation);
   }
 

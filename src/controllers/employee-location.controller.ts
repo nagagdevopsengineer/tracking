@@ -1,3 +1,4 @@
+import {inject} from '@loopback/context';
 import {
   Count,
   CountSchema,
@@ -19,11 +20,14 @@ import {
 } from '@loopback/rest';
 import {Employeelocation} from '../models/employeelocation.model';
 import {EmployeelocationRepository} from '../repositories/employeelocation.repository';
+import {CrmService} from '../services/crmemployeedatasource.service';
 
 export class EmployeeLocationController {
   constructor(
     @repository(EmployeelocationRepository)
     public employeelocationRepository : EmployeelocationRepository,
+    @inject('services.CrmService')
+    protected crmService: CrmService,
   ) {}
 
   @post('/employeelocations')
@@ -44,6 +48,8 @@ export class EmployeeLocationController {
     })
     employeelocation: Omit<Employeelocation, 'id'>,
   ): Promise<Employeelocation> {
+    this.crmService.employeeTracking(employeelocation.tripId,
+       employeelocation.latitude, employeelocation.longitude);
     return this.employeelocationRepository.create(employeelocation);
   }
 
