@@ -9,7 +9,7 @@ const config = {
   
     "name": "crmrestdatasource",
     "connector": "rest",
-    "baseURL": 'http://dev-crmcontent.vapprtech.com/api',
+    "baseURL": 'http://dev-crmcontent.vapprtech.com/api/',
     "crud": false,
     "options": {
     "headers": {
