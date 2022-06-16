@@ -9,7 +9,7 @@ const config = {
 
   "name": "crmemployeedatasource",
   "connector": "rest",
-  "baseURL": 'http://localhost',
+  "baseURL": 'http://dev-crmcontent.vapprtech.com',
   "crud": false,
   "options": {
   "headers": {
@@ -21,7 +21,7 @@ const config = {
       {
   "template": {
   "method": "GET",
-  "url": "http://localhost:1337/api/trips/employeeracking/{tripId}/{lat}/{long}"
+  "url": "http://dev-crmcontent.vapprtech.com/api/trips/employeeracking/{tripId}/{lat}/{long}"
         },
   "functions": {
   "employeeTracking": ["tripId","lat","long"]

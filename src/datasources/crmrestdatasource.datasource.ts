@@ -9,7 +9,7 @@ const config = {
   
     "name": "crmrestdatasource",
     "connector": "rest",
-    "baseURL": 'http://localhost:1337/api',
+    "baseURL": 'http://dev-crmcontent.vapprtech.com/api',
     "crud": false,
     "options": {
     "headers": {
@@ -21,7 +21,7 @@ const config = {
         {
     "template": {
     "method": "GET",
-    "url": "http://localhost:1337/api/trips/bustracking/{tripId}/{lat}/{long}"
+    "url": "http://dev-crmcontent.vapprtech.com/api/trips/bustracking/{tripId}/{lat}/{long}"
           },
     "functions": {
     "busTracking": ["tripId","lat","long"]
