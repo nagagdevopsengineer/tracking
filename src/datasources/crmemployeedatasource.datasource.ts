@@ -21,7 +21,7 @@ const config = {
       {
   "template": {
   "method": "GET",
-  "url": "http://dev-crmcontent.vapprtech.com/api/trips/employeeracking/{tripId}/{lat}/{long}"
+  "url": "http://dev-crmcontent.vapprtech.com/api/trips/employeetracking/{tripId}/{lat}/{long}"
         },
   "functions": {
   "employeeTracking": ["tripId","lat","long"]
