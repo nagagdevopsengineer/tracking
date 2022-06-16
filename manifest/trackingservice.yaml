@@ -1,10 +1,10 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: tracking-dev
-  namespace: tracking-dev
+  name: tracking
+  namespace: tracking
   labels:
-    app: tracking-dev
+    app: tracking
 spec:
   type: NodePort
   ports:
@@ -12,4 +12,4 @@ spec:
     port: 80
     targetPort: 3000
   selector:
-    app: tracking-dev
+    app: tracking

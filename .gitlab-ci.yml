@@ -32,13 +32,13 @@ deploy-arrivnow-dev:
   image: vapprtech/awskubectl:latest
   before_script:
     - aws eks update-kubeconfig --name arrivnow-dev --region us-east-2
-    - kubectl create namespace tracking-dev  --dry-run=client -o yaml | kubectl apply -f -
+    - kubectl create namespace tracking  --dry-run=client -o yaml | kubectl apply -f -
   script:
      # - sed -i "s/latest/${CI_COMMIT_SHORT_SHA}/g" manifest/trackingdeployment.yaml
-      - kubectl apply -f manifest/dev
-      - kubectl rollout restart deployment tracking-dev -n tracking-dev
-      - kubectl get pods -n tracking-dev
-      - kubectl get svc -n tracking-dev -o wide
+      - kubectl apply -f manifest
+      - kubectl rollout restart deployment tracking -n tracking
+      - kubectl get pods -n tracking
+      - kubectl get svc -n tracking -o wide
   when: always
   only:
     - develop
@@ -52,7 +52,7 @@ deploy-arrivnow-qa:
     - kubectl create namespace tracking  --dry-run=client -o yaml | kubectl apply -f -
   script:
      # - sed -i "s/latest/${CI_COMMIT_SHORT_SHA}/g" manifest/trackingdeployment.yaml
-      - kubectl apply -f manifest/qa
+      - kubectl apply -f manifest
       - kubectl get pods -n tracking
       - kubectl get svc -n tracking -o wide
   when: always
