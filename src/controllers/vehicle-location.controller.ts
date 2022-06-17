@@ -48,9 +48,12 @@ export class VehicleLocationController {
     })
     vehiclelocation: Omit<Vehiclelocation, 'id'>,
   ): Promise<Vehiclelocation> {
-
-    this.crmService.busTracking(vehiclelocation.tripId,
-      vehiclelocation.latitude, vehiclelocation.longitude);
+    try {
+      this.crmService.busTracking(vehiclelocation.tripId,
+        vehiclelocation.latitude, vehiclelocation.longitude);
+    } catch (error: any) {
+      console.log(" error ", error);
+    }
     return this.vehiclelocationRepository.create(vehiclelocation);
   }
 
