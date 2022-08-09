@@ -5,18 +5,12 @@ import {
   Filter,
   FilterExcludingWhere,
   repository,
-  Where,
+  Where
 } from '@loopback/repository';
 import {
-  post,
-  param,
-  get,
-  getModelSchemaRef,
-  patch,
-  put,
-  del,
-  requestBody,
-  response,
+  del, get,
+  getModelSchemaRef, param, patch, post, put, requestBody,
+  response
 } from '@loopback/rest';
 import {Employeelocation} from '../models/employeelocation.model';
 import {EmployeelocationRepository} from '../repositories/employeelocation.repository';
@@ -48,8 +42,14 @@ export class EmployeeLocationController {
     })
     employeelocation: Omit<Employeelocation, 'id'>,
   ): Promise<Employeelocation> {
-    this.crmService.employeeTracking(employeelocation.tripId,
-       employeelocation.latitude, employeelocation.longitude);
+    // TO DO
+    // try {
+    //   this.crmService.employeeTracking(employeelocation.tripId,
+    //     employeelocation.latitude, employeelocation.longitude);
+    // } catch (error: any) {
+    //   console.log(" error ", error);
+    // }
+    // console.log("EMPLOYEE LOCATION", employeelocation)
     return this.employeelocationRepository.create(employeelocation);
   }
 
