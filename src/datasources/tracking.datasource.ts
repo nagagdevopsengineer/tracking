@@ -5,11 +5,11 @@ const config = {
   name: 'tracking',
   connector: 'mongodb',
   url: '',
-  host: '3.111.104.11',
+  host: '3.7.138.38',
   port: 27017,
-  user: 'trackingapp',
-  password: 'arrivnow123',
-  database: 'tracking',
+  user: 'arrivm',
+  password: 'password123',
+  database: 'admin',
   useNewUrlParser: true,
 };
 
