@@ -49,6 +49,18 @@ export class Vehiclelocation extends Entity {
   })
   tripId: number;
 
+  @property({
+    type: 'boolean',
+    required: true,
+  })
+  header: boolean;
+
+  @property({
+    type: 'number',
+    required: true,
+  })
+  angle: number;
+
   // Define well-known properties here
 
   // Indexer property to allow additional data

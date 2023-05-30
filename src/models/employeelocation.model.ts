@@ -45,6 +45,17 @@ export class Employeelocation extends Entity {
     type: 'number',
   })
   timestamp?: number;
+  @property({
+    type: 'boolean',
+    required: true,
+  })
+  header: boolean;
+
+  @property({
+    type: 'number',
+    required: true,
+  })
+  angle: number;
 
   // Define well-known properties here
 
