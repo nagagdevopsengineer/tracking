@@ -46,10 +46,10 @@ export class Employeelocation extends Entity {
   })
   timestamp?: number;
   @property({
-    type: 'boolean',
+    type: 'number',
     required: true,
   })
-  header: boolean;
+  header: number;
 
   @property({
     type: 'number',

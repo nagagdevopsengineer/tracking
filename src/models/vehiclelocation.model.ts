@@ -50,10 +50,10 @@ export class Vehiclelocation extends Entity {
   tripId: number;
 
   @property({
-    type: 'boolean',
+    type: 'number',
     required: true,
   })
-  header: boolean;
+  header: number;
 
   @property({
     type: 'number',
